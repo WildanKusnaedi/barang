@@ -40,7 +40,13 @@ class LoginController extends Controller
         if(Auth::attempt(
             ['email' => $request->email, 'password' => $request->password]
         )) {
-            return redirect()->intended('dashboard');
+            $user = auth()->user();
+            if($user->role ==='admin') {
+                return redirect()->intended('dashboard');
+            }
+            else {
+                return redirect()->intended('dashboard');
+            }
         }
         return back()->withErrors([
             'email'=> 'Email tidak terdaftar'
@@ -53,9 +59,16 @@ class LoginController extends Controller
      * @param  \App\Http\Requests\StoreLoginRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreLoginRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users', // Unique validation for email
+        ]);
+
+        $user = User::create($validatedData); // Create a new User model instance
+
+        return redirect()->route('users.index')->with('success', 'User created successfully!'); // Redirect with success message
     }
 
     /**

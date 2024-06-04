@@ -37,5 +37,13 @@ class DatabaseSeeder extends Seeder
             "last_login" => "today"
         ]);
 
+        User::create([
+            "email"=> "user@mail.com",
+            "nama" => "user",
+            "password"=> bcrypt("user123"),
+            "role" => "user",
+            "last_login" => "today"
+        ]);
+
     }
 }

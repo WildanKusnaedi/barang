@@ -24,3 +24,12 @@ Route::get('/dashboard', function(){
     return view('dashboard');
 
 });
+
+Route::get('/master_user', function(){
+    return view('master_user');
+});
+
+Route::get('/user/tambah', function(){
+    return view('tambah');
+});
+Route::post('/users', [LoginController::class,'store'])->name('users.store');
