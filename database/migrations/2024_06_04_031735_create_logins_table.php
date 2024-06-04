@@ -14,7 +14,8 @@ class CreateLoginsTable extends Migration
     public function up()
     {
         Schema::create('logins', function (Blueprint $table) {
-            $table->string('email')->primary();
+            $table->string('email')->unique();
+            $table->primary('email');
             $table->string('nama');
             $table->string('password');
             $table->enum('role', ['admin','user']);
